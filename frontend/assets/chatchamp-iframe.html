@@ -1,0 +1,82 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      margin: 0;
+      padding: 0
+    }
+
+    .trbo-a-chatchamp-wizard-container {
+      height: initial !important
+    }
+  </style>
+  <script>
+    var queryParams = window.location.search
+      .replace(/^\?/, '')
+      .split('&')
+      .reduce(function(acc, pair) {
+        var splitted = pair.split('=');
+        acc[decodeURIComponent(splitted[0])] = decodeURIComponent(splitted[1]);
+        return acc;
+      }, {});
+
+    // Check if HTML file is loaded inside an iFrame
+    if (self !== top) {
+      /**
+       * Override for window.open which is used by the chatchamp wizard to open products.
+       * The target URL is sent to the iFrame parent and handled there.
+       */
+      window.open = function (url) {
+        var message = JSON.stringify({
+          source: 'chatchamp-iframe',
+          type: 'window-open',
+          url: url,
+        })
+
+        window.parent.postMessage(message, '*');
+      };
+    }
+
+    window.addEventListener('load', () => {
+      if (!queryParams.customerId || !queryParams.wizardId) {
+        if (!queryParams.customerId) {
+          console.error('Chatchamp iFrame: customerId GET parameter missing')
+        }
+
+        if (!queryParams.wizardId) {
+          console.error('Chatchamp iFrame: wizardId GET parameter missing')
+        }
+
+        var message = JSON.stringify({
+          source: 'chatchamp-iframe',
+          type: 'missing-params',
+        });
+
+        window.parent.postMessage(message, '*');
+        return;
+      }
+
+      // Add target div for the wizard script
+      var div = document.createElement('div');
+      div.setAttribute('id', 'chatchamp-wizard');
+      div.setAttribute('data-wizard-id', queryParams.wizardId);
+
+      document.querySelector('body').appendChild(div);
+
+      // Add target div for the wizard script
+      var script = document.createElement('script');
+      script.innerText = `
+        (function (c, h, a, t, b, o, x) {
+          c.ccq = function () { c.ccq.callMethod ? c.ccq.callMethod.apply(c.ccq, arguments) : c.ccq.queue.push(arguments) };
+          c.ccq.queue = []; o = h.createElement(a); o.src = t; o.async = 1; o.setAttribute('data-chatchamp-customer-id', b); o.setAttribute('data-chatchamp-logging', true);
+          x = h.getElementsByTagName(a)[0]; x.parentNode.insertBefore(o, x);
+        })(window, document, 'script', 'https://js.chatchamp.com/bubble.min.js', '${queryParams.customerId}');
+      `;
+      document.querySelector('body').appendChild(script);
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>
