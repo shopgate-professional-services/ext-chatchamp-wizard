@@ -1,4 +1,6 @@
-import { appDidStart$, redirects, logger } from '@shopgate/engage/core';
+import {
+  appDidStart$, redirects, logger, showModal, i18n,
+} from '@shopgate/engage/core';
 import { fetchSearchResults } from '@shopgate/engage/search';
 import { getProductRoute } from '@shopgate/engage/product';
 import { setChatchampProductFetching } from '../actions';
@@ -25,6 +27,7 @@ export default (subscribe) => {
           productURLSearchParam,
           matcher,
         });
+
         return null;
       }
 
@@ -43,6 +46,11 @@ export default (subscribe) => {
       if (product?.id) {
         return getProductRoute(product.id);
       }
+
+      dispatch(showModal({
+        message: i18n.text('shopgateProject-chatchampWizard.productNotFoundMessage'),
+        dismiss: null,
+      }));
 
       return null;
     };

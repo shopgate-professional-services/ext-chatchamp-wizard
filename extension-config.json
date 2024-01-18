@@ -17,6 +17,16 @@
       "id": "reducer",
       "path": "frontend/reducers/index.js",
       "type": "reducers"
+    },
+    {
+      "type": "translations",
+      "path": "frontend/locale/en-US.json",
+      "id": "locale/en-US"
+    },
+    {
+      "type": "translations",
+      "path": "frontend/locale/de-DE.json",
+      "id": "locale/de-DE"
     }
   ],
   "configuration": {
