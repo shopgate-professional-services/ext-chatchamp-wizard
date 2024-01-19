@@ -112,13 +112,19 @@ const ChatchampWizard = ({
     return match?.title || '';
   }, [wizardId]);
 
+  const iFrameSrc = useMemo(
+    () => `${iFrameURL}?customerId=${customerId}&wizardId=${wizardId}`,
+    [wizardId]
+  );
+
   return (
-    <View>
+    <View noScrollOnKeyboard>
       <AppBar title={pageTitle} />
+      {iFrameSrc}
       <div className={classNames(styles.iframeWrapper, 'chatchamp-iframe-wrapper')}>
         <iframe
           ref={iframeRef}
-          src={`${iFrameURL}?customerId=${customerId}&wizardId=${wizardId}`}
+          src={iFrameSrc}
           sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
           className={classNames(styles.iframe, 'chatchamp-iframe')}
           title="chatchamp-iframe"
