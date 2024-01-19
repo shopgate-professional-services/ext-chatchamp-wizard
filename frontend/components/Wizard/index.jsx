@@ -118,7 +118,7 @@ const ChatchampWizard = ({
   );
 
   return (
-    <View noScrollOnKeyboard>
+    <View noKeyboardListener>
       <AppBar title={pageTitle} />
       <div className={classNames(styles.iframeWrapper, 'chatchamp-iframe-wrapper')}>
         <iframe
