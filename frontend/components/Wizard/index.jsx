@@ -30,11 +30,29 @@ const makeMapStateToProps = () => state => ({
 });
 
 /**
+* Connects the dispatch function to a callable function in the props.
+* @param  {Function} dispatch The redux dispatch function.
+* @return {Object} The extended component props.
+*/
+const mapDispatchToProps = dispatch => ({
+  showTabBar: () => dispatch({
+    type: 'SHOW_TAB_BAR',
+  }),
+  hideTabBar: () => dispatch({
+    type: 'HIDE_TAB_BAR',
+  }),
+});
+
+/**
  * The ChatchampWizard component which renders the route content with navigation bar and iFrame
  * for the actual Chatchamp wizard.
  * @returns {JSX}
  */
-const ChatchampWizard = ({ productFetching }) => {
+const ChatchampWizard = ({
+  productFetching,
+  showTabBar,
+  hideTabBar,
+}) => {
   const { View, AppBar } = useTheme();
   const { params: { wizardId } } = useRoute();
 
@@ -52,14 +70,27 @@ const ChatchampWizard = ({ productFetching }) => {
     try {
       const message = JSON.parse(event.data);
 
-      // Handle messages dispatched when PDP button was pressed inside the wizard
-      if (message?.type === 'window-open' && message?.url && !productFetching) {
-        window.open(message.url);
+      switch (message?.type) {
+        case 'window-open':
+          // Handle messages dispatched when PDP button was pressed inside the wizard
+          if (message?.type === 'window-open' && message?.url && !productFetching) {
+            window.open(message.url);
+          }
+          break;
+        case 'question-input-focus':
+          hideTabBar();
+          break;
+        case 'question-input-blur':
+          showTabBar();
+          break;
+        default:
+          logger.warn('Chatchamp Extension: Unhandled message from iFrame', message);
+          break;
       }
     } catch (e) {
       logger.error('Chatchamp Extension: Failed to process iFrame message', e);
     }
-  }, [productFetching]);
+  }, [hideTabBar, productFetching, showTabBar]);
 
   /**
    * Effect to maintain the message event handler for the iFrame
@@ -98,7 +129,9 @@ const ChatchampWizard = ({ productFetching }) => {
 };
 
 ChatchampWizard.propTypes = {
+  hideTabBar: PropTypes.func.isRequired,
   productFetching: PropTypes.bool.isRequired,
+  showTabBar: PropTypes.func.isRequired,
 };
 
-export default connect(makeMapStateToProps)(ChatchampWizard);
+export default connect(makeMapStateToProps, mapDispatchToProps)(ChatchampWizard);

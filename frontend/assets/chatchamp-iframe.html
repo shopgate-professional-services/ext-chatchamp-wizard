@@ -38,6 +38,30 @@
       };
     }
 
+    document.addEventListener('focusin', (e) => {
+      if (e.target.tagName === 'INPUT' && e.target.className.includes('trbo-a-question-input__input')) {
+        console.log('focus')
+        var message = JSON.stringify({
+          source: 'chatchamp-iframe',
+          type: 'question-input-focus',
+        })
+
+        window.parent.postMessage(message, '*');
+      }
+    });
+
+    document.addEventListener('focusout', (e) => {
+      if (e.target.tagName === 'INPUT' && e.target.className.includes('trbo-a-question-input__input')) {
+        console.log('blur')
+        var message = JSON.stringify({
+          source: 'chatchamp-iframe',
+          type: 'question-input-blur',
+        })
+
+        window.parent.postMessage(message, '*');
+      }
+    });
+
     window.addEventListener('load', () => {
       if (!queryParams.customerId || !queryParams.wizardId) {
         if (!queryParams.customerId) {
