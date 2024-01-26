@@ -1,0 +1,82 @@
+{
+  "version": "1.0.0-beta.6",
+  "id": "@shopgate-project/chatchamp-wizard",
+  "components": [
+    {
+      "id": "ChatChampPage",
+      "target": "app.routes",
+      "type": "portals",
+      "path": "frontend/routes/ChatchampWizard/index.jsx"
+    },
+    {
+      "id": "subscriptions",
+      "path": "frontend/subscriptions/index.js",
+      "type": "subscribers"
+    },
+    {
+      "id": "reducer",
+      "path": "frontend/reducers/index.js",
+      "type": "reducers"
+    },
+    {
+      "type": "translations",
+      "path": "frontend/locale/en-US.json",
+      "id": "locale/en-US"
+    },
+    {
+      "type": "translations",
+      "path": "frontend/locale/de-DE.json",
+      "id": "locale/de-DE"
+    }
+  ],
+  "configuration": {
+    "customerId": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "",
+      "params": {
+        "label": "The Chatchamp Customer Id",
+        "type": "string",
+        "required": true
+      }
+    },
+    "productPagePattern": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "",
+      "params": {
+        "label": "Pattern of product page urls opened by the Chatchamp wizard",
+        "type": "string",
+        "required": true
+      }
+    },
+    "productURLSearchParam": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "productNumber",
+      "params": {
+        "label": "The parameter from the productPagePattern that is used to search for a wizard product",
+        "type": "string"
+      }
+    },
+    "pageTitleMapping": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": [],
+      "params": {
+        "label": "Mapping between Chatchamp wizardId and the wizard page title",
+        "type": "json"
+      }
+    },
+    "iFrameURL": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "https://connect.shopgate.com/assets/extensions/ext-chatchamp-wizard/chatchamp-iframe.html",
+      "params": {
+        "label": "URL to the Chatchamp iFrame HTML document",
+        "type": "string",
+        "required": true
+      }
+    }
+  }
+}
