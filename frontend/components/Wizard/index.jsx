@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { css } from 'glamor';
 import classNames from 'classnames';
 import { useTheme, useRoute, logger } from '@shopgate/engage/core';
-import { getProductFetching } from '../../selectors';
+import { getProductFetching, getIsBlockedByCookieConsent } from '../../selectors';
 import { customerId, iFrameURL, pageTitleMapping } from '../../config';
 
 const styles = {
@@ -27,6 +27,7 @@ const styles = {
  */
 const makeMapStateToProps = () => state => ({
   productFetching: getProductFetching(state),
+  isBlockedByCookieConsent: getIsBlockedByCookieConsent(state),
 });
 
 /**
@@ -52,6 +53,7 @@ const ChatchampWizard = ({
   productFetching,
   showTabBar,
   hideTabBar,
+  isBlockedByCookieConsent,
 }) => {
   const { View, AppBar } = useTheme();
   const { params: { wizardId } } = useRoute();
@@ -120,21 +122,25 @@ const ChatchampWizard = ({
   return (
     <View noKeyboardListener>
       <AppBar title={pageTitle} />
-      <div className={classNames(styles.iframeWrapper, 'chatchamp-iframe-wrapper')}>
-        <iframe
-          ref={iframeRef}
-          src={iFrameSrc}
-          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-          className={classNames(styles.iframe, 'chatchamp-iframe')}
-          title="chatchamp-iframe"
-        />
-      </div>
+      { /* TODO add fallback text */}
+      { !isBlockedByCookieConsent && (
+        <div className={classNames(styles.iframeWrapper, 'chatchamp-iframe-wrapper')}>
+          <iframe
+            ref={iframeRef}
+            src={iFrameSrc}
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            className={classNames(styles.iframe, 'chatchamp-iframe')}
+            title="chatchamp-iframe"
+          />
+        </div>
+      )}
     </View>
   );
 };
 
 ChatchampWizard.propTypes = {
   hideTabBar: PropTypes.func.isRequired,
+  isBlockedByCookieConsent: PropTypes.bool.isRequired,
   productFetching: PropTypes.bool.isRequired,
   showTabBar: PropTypes.func.isRequired,
 };
