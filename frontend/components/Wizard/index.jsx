@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { useTheme, useRoute, logger } from '@shopgate/engage/core';
 import { getProductFetching, getIsBlockedByCookieConsent } from '../../selectors';
 import { customerId, iFrameURL, pageTitleMapping } from '../../config';
+import CookieConsentFallback from './CookieConsentFallback';
 
 const styles = {
   iframe: css({
@@ -122,8 +123,7 @@ const ChatchampWizard = ({
   return (
     <View noKeyboardListener>
       <AppBar title={pageTitle} />
-      { /* TODO add fallback text */}
-      { !isBlockedByCookieConsent && (
+      { !isBlockedByCookieConsent ? (
         <div className={classNames(styles.iframeWrapper, 'chatchamp-iframe-wrapper')}>
           <iframe
             ref={iframeRef}
@@ -133,6 +133,8 @@ const ChatchampWizard = ({
             title="chatchamp-iframe"
           />
         </div>
+      ) : (
+        <CookieConsentFallback />
       )}
     </View>
   );
