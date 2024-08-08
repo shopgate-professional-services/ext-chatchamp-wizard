@@ -1,5 +1,7 @@
 {
   "shopgateProject-chatchampWizard": {
-    "productNotFoundMessage": "Product not found"
+    "productNotFoundMessage": "Product not found",
+    "cookieConsentMessage": "To use our product finder, comfort cookies must be enabled. You can enable them in the data privacy settings and then come back to this page to use the product finder.",
+    "openPrivacySettings": "Open Privacy Settings"
   }
 }

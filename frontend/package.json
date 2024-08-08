@@ -1,6 +1,6 @@
 {
   "name": "@shopgate-project/chatchamp-wizard",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "scripts": {
     "lint": "eslint --parser babel-eslint --ignore-path ../.gitignore --ignore-path .eslintignore --ext .js --ext .jsx .",
     "test": "echo \"Error: no test specified\" && exit 1"
