@@ -19,6 +19,7 @@ const styles = {
     overflow: 'hidden',
     display: 'flex',
     flex: 1,
+    minHeight: 'calc(100vh - var(--footer-height) - var(--app-bar-height))',
   }),
 };
 

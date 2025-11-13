@@ -8,10 +8,8 @@
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@shopgate/engage": "^6.21.0-rc.4",
-    "@shopgate/eslint-config": "^6.21.0-rc.4",
-    "babel-core": "^6.26.0",
-    "babel-plugin-module-resolver": "^3.1.0",
+    "@shopgate/engage": "^7.29.0",
+    "@shopgate/eslint-config": "^7.29.0",
     "classnames": "^2.2.5",
     "eslint": "^7.9.0",
     "glamor": "^2.20.40",
@@ -21,6 +19,6 @@
     "react": "~16.12.0"
   },
   "peerDependencies": {
-    "@shopgate/engage": "^6.21.0-rc.4"
+    "@shopgate/engage": ">=7.29.0"
   }
 }
