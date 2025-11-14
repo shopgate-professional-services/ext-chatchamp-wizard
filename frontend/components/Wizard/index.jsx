@@ -19,6 +19,7 @@ const styles = {
     overflow: 'hidden',
     display: 'flex',
     flex: 1,
+    minHeight: 'calc(100vh - var(--page-content-offset-bottom) - var(--app-bar-height) + var(--extra-ios-scroll-space, 0))',
   }),
 };
 

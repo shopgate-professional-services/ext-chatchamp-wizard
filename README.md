@@ -1,6 +1,6 @@
-# Shopgate Connect - Chatchamp Wizard Extension
+# Shopgate Connect - Trbo Advise Wizard Extension
 
-This extension provides an integration of the [Chatchamp](https://www.chatchamp.com/) recommendation wizard. It adds a new route to Engage (`/chatchamp-wizard/wizard-id`) that can be used to open the different wizards that are configured inside the "Chatchamp App".
+This extension provides an integration of the [Trbo Advise](https://www.trbo.com/trbo-product/advise/) (formerly "Chatchamp") recommendation wizard. It adds a new route to the app (`/chatchamp-wizard/wizard-id`) that can be used to open the different wizards that are configured inside Trbo.
 
 ## Configuration
 
@@ -12,8 +12,8 @@ The `customerId` is used for authentication against the Chatchamp API.
 
 ### productPagePattern (string) - required
 
-The last step of the Chatchamp wizard shows a list o recommended product. When users click on those products they are usually redirected to a product details page inside the desktop webshop.
-Since the extension is supposed to open products within "Engage", it needs to know about the pattern of the desktop URLs, so that it can decode product identifiers which can be used to perform a product search.
+The last step of the Trbo wizard shows a list o recommended product. When users click on those products they are usually redirected to a product details page inside the desktop webshop.
+Since the extension is supposed to open products within the app, it needs to know about the pattern of the desktop URLs, so that it can decode product identifiers which can be used to perform a product search.
 
 #### Example
 Example desktop product page url: `https://my-nice-shop.com/product/seo-product-title/pr0duct-number`
@@ -39,7 +39,7 @@ The pageTitleMapping setting allows to configure page titles for each wizard. Wh
 ```
 
 ### iFrameURL
-Since the Chatchamp wizard does not work for SPAs right now, the integration is implemented via an iFrame that loads a static HTML document with the necessary code. By default this document is provided by Shopgate and no additional configuration is required.
+Since the Trbo wizard does not work for SPAs right now, the integration is implemented via an iFrame that loads a static HTML document with the necessary code. By default this document is provided by Shopgate and no additional configuration is required.
 
 This parameter allows to replace the document with a custom implementation. An example document can be fond [here](./frontend/assets/chatchamp-iframe.html).
 
